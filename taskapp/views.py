@@ -3,5 +3,17 @@ from .models import Task
 
 # Create your views here.
 def index(request):
-    return render(request, 'index.html')
+    tasks = Task.objects.all()
+    context = {"tasks": tasks}
+    return render(request, 'index.html', context)
 
+def create_task(request):
+    if request.method == "POST":
+        title = request.POST["title"]
+        query = Task(title=title)
+        query.save()
+        return redirect("/")
+    
+
+   
+    
